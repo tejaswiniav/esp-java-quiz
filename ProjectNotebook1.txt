@@ -1,0 +1,16 @@
+09/29/2016
+Its a quiz hence there will be question, options, correct solution and user solution to each question. It is going to be an unique set of question-options-solution.
+Thinking in terms of OOP, each new question will be an object. Each object should have members: question, options, solution. When the user selects an answer, this answer should also be a member of that object's instance variable
+Hence, I will have a class QuestionAnswer with all the member variables and methods.
+In the main class Quiz, there will be an array of QuestionAnswer and each element of this array will be an object of the QuestionAnswer class.
+Creating skeleton of the quiz.
+
+09/30/2016
+The member variables of the class QuestionAnswer should be protected via access specifiers. These variables should not be accessible outside of the class. In order to set or get these variables corresponding methods(setters and getters) must be invoked. --> TODO Later.
+I might later want to have a hash map of the questions, instead of having to initialize each element of quests array.
+
+10/03/2016
+Keep repeating the quiz for the user until asked for.
+
+10/05/2016
+Create a hash of tuples to store the questions list.
