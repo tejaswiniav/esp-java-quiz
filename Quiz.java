@@ -1,9 +1,6 @@
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
+import java.io.*;
 import java.util.Scanner;
-import java.util.Hashtable;
-import java.util.List;
-
+import java.util.ArrayList;
 
 public class Quiz
 {
@@ -21,31 +18,20 @@ public class Quiz
       String[] opt3 = {"o1", "o2", "o3", "o4"};
       String[] opt4 = {"o1", "o2", "o3", "o4"};
 
-      Hashtable question_list = new Hashtable();
-
-      question_list.put(1, new Triplet.with("question1", opt1, 1));
-      question_list.put(2, new Triplet.with("question2", opt2, 4));
-      question_list.put(3, new Triplet.with("question3", opt2, 2));
-      question_list.put(4, new Triplet.with("question4", opt2, 3));
-
-
       // quests is an array of QuestionAnswer.
       // Each element of this array will refer to object of class QuestionAnswer
-      QuestionAnswer[] quests = new QuestionAnswer[NUM_OF_QUESTIONS];
+      ArrayList<QuestionAnswer> quests = new ArrayList<QuestionAnswer>();
 
       // Initialize the array
-      /*
-      quests[0] = new QuestionAnswer("question1", opt1, 1);
-      quests[1] = new QuestionAnswer("question2", opt2, 4);
-      quests[2] = new QuestionAnswer("question3", opt3, 2);
-      quests[3] = new QuestionAnswer("question4", opt4, 3);
-      */
 
-      for (int i=0; i< NUM_OF_QUESTIONS; i++)
-      {
-        quests[i] = new QuestionAnswer(question_list.get(i));
-      }
-
+      quests.add(new QuestionAnswer("question1", opt1, 1));
+      quests.add(new QuestionAnswer("question2", opt2, 4));
+      quests.add(new QuestionAnswer("question3", opt3, 2));
+      quests.add(new QuestionAnswer("question4", opt4, 3));
+      quests.add(new QuestionAnswer("question5", opt1, 1));
+      quests.add(new QuestionAnswer("question6", opt2, 4));
+      quests.add(new QuestionAnswer("question7", opt3, 2));
+      quests.add(new QuestionAnswer("question8", opt4, 3));
 
       // Play the quiz and get answers from user.
       // Play until the user says quit.
@@ -53,29 +39,27 @@ public class Quiz
       {
         int score = 0;
         Scanner input = new Scanner(System.in);
-        for (int qindex=0; qindex<NUM_OF_QUESTIONS; qindex++)
+        for (int qIndex=0; qIndex<quests.size(); qIndex++)
         {
-
-          System.out.println("Question" + (qindex+1) + ": " + quests[qindex].question);
+          System.out.println("Question" + (qIndex+1) + ": " + quests.get(qIndex).getQuestion());
           System.out.println("Your options are:");
-          for (int oindex=0; oindex<NUM_OF_OPTIONS; oindex++)
-          {
-              System.out.print("Option" + (oindex+1) + ": " + quests[qindex].options[oindex] + "\t");
-          }
-          int uanswer = Integer.parseInt(input.nextLine());
-          System.out.println("You have entered: " + uanswer);
-          quests[qindex].chosen = uanswer;
-          //System.out.println("Solution" + j + ": " + quests[index].solution);
-        }
-        for (int qindex=0; qindex<NUM_OF_QUESTIONS; qindex++)
-        {
-          if(quests[qindex].chosen == quests[qindex].solution)
+          System.out.print(quests.get(qIndex));
+          System.out.print("Answer(1): ");
+          int uAnswer = input.nextInt();
+          quests.get(qIndex).setUserChoice(uAnswer);
+          if(quests.get(qIndex).getUserChoice() == quests.get(qIndex).getSolution())
           {
             score++;
+            System.out.println("Good Job! That's correct\n");
+          }
+          else
+          {
+            System.out.println("Oops!! Wrong one\n");
           }
         }
-        System.out.println("Your score is: " + score);
-        //System.out.println("Your percent is: " + ((score/NUM_OF_QUESTIONS)*100));
+        System.out.println("Your score is: " + score + " on " + quests.size());
+        double percent = ((double)score/(double)quests.size())*100;
+        System.out.println("Your percent is: " + percent + "%");
         System.out.print("Do you want to play again? (y/n): ");
         quit = input.next();
     } while (quit.equals("y"));
